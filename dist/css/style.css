@@ -26,6 +26,9 @@ body {
     body section .input-wrapper {
       margin: 1rem 0;
       display: flex; }
+      html section .input-wrapper :first-child,
+      body section .input-wrapper :first-child {
+        flex: 1; }
       html section .input-wrapper input,
       body section .input-wrapper input {
         padding: 1.375rem 0.75rem;
@@ -36,7 +39,6 @@ body {
         border: 0;
         border-bottom: 2px solid #898989;
         height: 2rem;
-        flex: 1;
         transition: background-color 0.3s; }
       html section .input-wrapper input:hover,
       html section .input-wrapper input:focus,

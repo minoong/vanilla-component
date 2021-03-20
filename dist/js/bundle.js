@@ -51,6 +51,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+/* harmony import */ var _lib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./lib */ "./src/js/lib.js");
 function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
 
 function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -63,6 +64,8 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToAr
 
 function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
 
+
+
 function makeUI() {
   var frag = document.createDocumentFragment();
   var wrapper = document.createElement('div');
@@ -74,20 +77,22 @@ function makeUI() {
   document.body.append(frag);
 }
 
+var inputRoleInit = function inputRoleInit(target) {
+  target.forEach(function (input) {
+    _toConsumableArray(input.classList).forEach(function (cls) {
+      if (['number', 'eng', 'kor', 'symbol'].includes(cls)) {
+        _lib__WEBPACK_IMPORTED_MODULE_0__.utils.addEventListener(input, 'input', validCheck);
+        _lib__WEBPACK_IMPORTED_MODULE_0__.utils.addEventListener(input, 'paste', validCheck);
+      }
+    });
+  });
+};
+
 function initForm(selector) {
   var el = selector.querySelector('.form-id');
   el.focus();
   var userInput = selector.querySelectorAll('.user-input');
-  userInput.forEach(function (input, index) {
-    var checkRole = _toConsumableArray(input.classList).filter(function (cls) {
-      return ['number', 'eng', 'kor', 'symbol'].includes(cls);
-    });
-
-    if (checkRole.length > 0) {
-      input.addEventListener('input', validCheck);
-      input.addEventListener('paste', validCheck);
-    }
-  });
+  inputRoleInit(userInput);
   selector.querySelector('.verity-try-btn.init').addEventListener('click', function (event) {
     var _this = this;
 
@@ -180,9 +185,15 @@ var loginLib = {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "test": () => (/* binding */ test)
+/* harmony export */   "test": () => (/* binding */ test),
+/* harmony export */   "utils": () => (/* binding */ utils)
 /* harmony export */ });
 var test = 'export';
+var utils = {
+  addEventListener: function addEventListener(target, method, fn) {
+    target.addEventListener(method, fn);
+  }
+};
 
 /***/ }),
 

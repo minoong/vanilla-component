@@ -1,3 +1,5 @@
+import { utils } from './lib';
+
 function makeUI() {
   const frag = document.createDocumentFragment();
   const wrapper = document.createElement('div');
@@ -13,22 +15,24 @@ function makeUI() {
   document.body.append(frag);
 }
 
+const inputRoleInit = target => {
+  target.forEach(input => {
+    [...input.classList].forEach(cls => {
+      if (['number', 'eng', 'kor', 'symbol'].includes(cls)) {
+        utils.addEventListener(input, 'input', validCheck);
+        utils.addEventListener(input, 'paste', validCheck);
+      }
+    });
+  });
+};
+
 function initForm(selector) {
   const el = selector.querySelector('.form-id');
   el.focus();
 
   const userInput = selector.querySelectorAll('.user-input');
 
-  userInput.forEach((input, index) => {
-    const checkRole = [...input.classList].filter(cls =>
-      ['number', 'eng', 'kor', 'symbol'].includes(cls)
-    );
-
-    if (checkRole.length > 0) {
-      input.addEventListener('input', validCheck);
-      input.addEventListener('paste', validCheck);
-    }
-  });
+  inputRoleInit(userInput);
 
   selector
     .querySelector('.verity-try-btn.init')
