@@ -79,8 +79,14 @@ function initForm(selector) {
   el.focus();
   var userInput = selector.querySelectorAll('.user-input');
   userInput.forEach(function (input, index) {
-    // input.addEventListener('keypress', validCheck);
-    input.addEventListener('input', validCheck);
+    var checkRole = _toConsumableArray(input.classList).filter(function (cls) {
+      return ['number', 'eng', 'kor', 'symbol'].includes(cls);
+    });
+
+    if (checkRole.length > 0) {
+      input.addEventListener('input', validCheck);
+      input.addEventListener('paste', validCheck);
+    }
   });
 }
 /**
@@ -97,9 +103,9 @@ function initForm(selector) {
 
 
 function validCheck(event, role) {
-  if (event.data == null) return;
+  if (event.data == null && event.clipboardData != null) return;
   var target = event.target;
-  var value = target.value;
+  var value = event.clipboardData == null ? target.value : event.clipboardData.getData('text/plain');
 
   var checkRole = _toConsumableArray(target.classList).filter(function (cls) {
     return ['number', 'eng', 'kor', 'symbol'].includes(cls);
@@ -109,8 +115,7 @@ function validCheck(event, role) {
     return /{.*}/.exec(cls);
   });
 
-  console.log(length);
-  console.log(length);
+  var lengthRole = length.length > 0 ? length : '{1,}';
   var genRole = checkRole.reduce(function (makeRole, r) {
     if (r === 'number') makeRole.push(/0-9/);
     if (r === 'eng') makeRole.push(/a-zA-Z/);
@@ -120,8 +125,8 @@ function validCheck(event, role) {
     return reg.source;
   }).join('');
 
-  if (new RegExp("^(.)".concat(length, "$"), 'gi').test(value)) {
-    var regExp = new RegExp("[^".concat(genRole, "]").concat(length, "$"), 'gi');
+  if (new RegExp("^(.)".concat(lengthRole, "$"), 'gi').test(value)) {
+    var regExp = new RegExp("[^".concat(genRole, "]").concat(lengthRole, "$"), 'gi');
     target.value = value.replace(regExp, '');
   } else {
     target.value = value.slice(0, value.length - 1);

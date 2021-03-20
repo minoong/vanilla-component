@@ -20,8 +20,14 @@ function initForm(selector) {
   const userInput = selector.querySelectorAll('.user-input');
 
   userInput.forEach((input, index) => {
-    // input.addEventListener('keypress', validCheck);
-    input.addEventListener('input', validCheck);
+    const checkRole = [...input.classList].filter(cls =>
+      ['number', 'eng', 'kor', 'symbol'].includes(cls)
+    );
+
+    if (checkRole.length > 0) {
+      input.addEventListener('input', validCheck);
+      input.addEventListener('paste', validCheck);
+    }
   });
 }
 
@@ -37,19 +43,20 @@ function initForm(selector) {
  * @returns
  */
 function validCheck(event, role) {
-  if (event.data == null) return;
+  if (event.data == null && event.clipboardData != null) return;
 
   const target = event.target;
-  const value = target.value;
+  const value =
+    event.clipboardData == null
+      ? target.value
+      : event.clipboardData.getData('text/plain');
 
   const checkRole = [...target.classList].filter(cls =>
     ['number', 'eng', 'kor', 'symbol'].includes(cls)
   );
 
   const length = [...target.classList].filter(cls => /{.*}/.exec(cls));
-  console.log(length);
-
-  console.log(length);
+  const lengthRole = length.length > 0 ? length : '{1,}';
 
   const genRole = checkRole
     .reduce((makeRole, r) => {
@@ -62,8 +69,8 @@ function validCheck(event, role) {
     .map(reg => reg.source)
     .join('');
 
-  if (new RegExp(`^(.)${length}$`, 'gi').test(value)) {
-    const regExp = new RegExp(`[^${genRole}]${length}$`, 'gi');
+  if (new RegExp(`^(.)${lengthRole}$`, 'gi').test(value)) {
+    const regExp = new RegExp(`[^${genRole}]${lengthRole}$`, 'gi');
     target.value = value.replace(regExp, '');
   } else {
     target.value = value.slice(0, value.length - 1);

@@ -48,7 +48,8 @@ body {
         outline: none;
         border: 0;
         padding: 1rem;
-        border-radius: 0.675rem;
+        border: 2px solid rgb(0, 102, 255);
+        border-radius: 2rem;
         margin-left: 0.5rem;
         transition: background-color 0.3s;
         cursor: pointer;
