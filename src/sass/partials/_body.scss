@@ -10,12 +10,16 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+  background: rgb(157, 196, 255);
   section {
-    border: 1px solid #898989;
-    border-radius: 5px;
+    // border: 1px solid #898989;
+    border-radius: 3rem;
     width: 25rem;
+    background-color: white;
 
     padding: 2rem;
+
+    // box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.125);
 
     .title {
       text-align: center;
@@ -44,15 +48,25 @@ body {
       button:hover {
         background-color: beige;
       }
+      button:hover {
+        color: #505050;
+        border: 2px solid rgb(126, 126, 126);
+      }
       button {
         outline: none;
         border: 0;
+        font-weight: bold;
+        color: #898989;
+        background-color: white;
         padding: 1rem;
-        border: 2px solid rgb(0, 102, 255);
+        border: 2px solid rgb(59, 59, 59);
         border-radius: 2rem;
         margin-left: 0.5rem;
-        transition: background-color 0.3s;
+        transition: all 0.3s;
         cursor: pointer;
+      }
+      .hide {
+        display: none;
       }
     }
   }

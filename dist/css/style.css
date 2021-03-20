@@ -8,12 +8,13 @@ body {
   height: 100%;
   display: flex;
   justify-content: center;
-  align-items: center; }
+  align-items: center;
+  background: #9dc4ff; }
   html section,
   body section {
-    border: 1px solid #898989;
-    border-radius: 5px;
+    border-radius: 3rem;
     width: 25rem;
+    background-color: white;
     padding: 2rem; }
     html section .title,
     body section .title {
@@ -44,16 +45,26 @@ body {
       body section .input-wrapper input:focus,
       body section .input-wrapper button:hover {
         background-color: beige; }
+      html section .input-wrapper button:hover,
+      body section .input-wrapper button:hover {
+        color: #505050;
+        border: 2px solid #7e7e7e; }
       html section .input-wrapper button,
       body section .input-wrapper button {
         outline: none;
         border: 0;
+        font-weight: bold;
+        color: #898989;
+        background-color: white;
         padding: 1rem;
-        border: 2px solid #0066ff;
+        border: 2px solid #3b3b3b;
         border-radius: 2rem;
         margin-left: 0.5rem;
-        transition: background-color 0.3s;
+        transition: all 0.3s;
         cursor: pointer; }
+      html section .input-wrapper .hide,
+      body section .input-wrapper .hide {
+        display: none; }
 
 body {
   color: #333;

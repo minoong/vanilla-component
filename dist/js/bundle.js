@@ -88,6 +88,36 @@ function initForm(selector) {
       input.addEventListener('paste', validCheck);
     }
   });
+  selector.querySelector('.verity-try-btn.init').addEventListener('click', function (event) {
+    var _this = this;
+
+    event.preventDefault();
+    var totalSeconds = 179;
+    var interval = setInterval(function () {
+      var result = countDown(totalSeconds);
+      totalSeconds -= 1;
+
+      _this.classList.remove('init');
+
+      selector.querySelector('.verity-confirm-btn').classList.remove('hide');
+
+      if (result[0] <= 0 && result[1] <= 0) {
+        clearInterval(interval);
+        _this.textContent = "\uC2DC\uAC04\uB9CC\uB8CC";
+        selector.querySelector('.verity-confirm-btn').classList.add('hide');
+      } else {
+        var min = result[0] === 0 ? '' : "".concat(result[0], ":");
+        var sec = result[1] < 10 ? "0".concat(result[1]) : "".concat(result[1]);
+        _this.textContent = "".concat(min).concat(sec);
+      }
+    }, 1000);
+  });
+}
+
+function countDown(totalSeconds) {
+  var min = parseInt(totalSeconds / 60, 10);
+  var sec = parseInt(totalSeconds % 60, 10);
+  return [min, sec, totalSeconds];
 }
 /**
  *

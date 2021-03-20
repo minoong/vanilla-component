@@ -29,6 +29,40 @@ function initForm(selector) {
       input.addEventListener('paste', validCheck);
     }
   });
+
+  selector
+    .querySelector('.verity-try-btn.init')
+    .addEventListener('click', function (event) {
+      event.preventDefault();
+
+      let totalSeconds = 179;
+
+      const interval = setInterval(() => {
+        const result = countDown(totalSeconds);
+        totalSeconds -= 1;
+
+        this.classList.remove('init');
+        selector.querySelector('.verity-confirm-btn').classList.remove('hide');
+
+        if (result[0] <= 0 && result[1] <= 0) {
+          clearInterval(interval);
+          this.textContent = `시간만료`;
+
+          selector.querySelector('.verity-confirm-btn').classList.add('hide');
+        } else {
+          const min = result[0] === 0 ? '' : `${result[0]}:`;
+          const sec = result[1] < 10 ? `0${result[1]}` : `${result[1]}`;
+          this.textContent = `${min}${sec}`;
+        }
+      }, 1000);
+    });
+}
+
+function countDown(totalSeconds) {
+  const min = parseInt(totalSeconds / 60, 10);
+  const sec = parseInt(totalSeconds % 60, 10);
+
+  return [min, sec, totalSeconds];
 }
 
 /**

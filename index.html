@@ -26,14 +26,16 @@
             </div>
 
             <div class="input-wrapper">
-                <input type="text" placeholder="패스워드" class='user-input form-password' />
+                <input type="text" placeholder="패스워드" class='user-input form-password number eng symbol {1,21}' />
             </div>
             <div class="input-wrapper">
-                <input type="text" placeholder="패스워드확인" class='user-input form-password-confirm' />
+                <input type="text" placeholder="패스워드확인"
+                    class='user-input form-password-confirm number eng symbol {1,21}' />
             </div>
             <div class="input-wrapper">
                 <input type="text" placeholder="인증번호" class='user-input form-verify' />
-                <button>인증요청</button>
+                <button class='verity-confirm-btn hide'>확인</button>
+                <button class='verity-try-btn init'>인증요청</button>
             </div>
         </form>
     </section>
