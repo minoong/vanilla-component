@@ -6,6 +6,7 @@
 
 - 클래스 속성을 기반으로 정규식 체크 작업(/src/js/form-component.js)
   - uesage) class='num eng kor symbol [0, 9]'
+- 인증요청 타이머 구현
 
 ---
 
