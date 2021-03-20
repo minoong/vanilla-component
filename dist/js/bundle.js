@@ -98,11 +98,19 @@ function initForm(selector) {
 
 function validCheck(event, role) {
   if (event.data == null) return;
+  var target = event.target;
+  var value = target.value;
 
-  var checkRole = _toConsumableArray(event.target.classList).filter(function (cls) {
+  var checkRole = _toConsumableArray(target.classList).filter(function (cls) {
     return ['number', 'eng', 'kor', 'symbol'].includes(cls);
   });
 
+  var length = _toConsumableArray(target.classList).filter(function (cls) {
+    return /{.*}/.exec(cls);
+  });
+
+  console.log(length);
+  console.log(length);
   var genRole = checkRole.reduce(function (makeRole, r) {
     if (r === 'number') makeRole.push(/0-9/);
     if (r === 'eng') makeRole.push(/a-zA-Z/);
@@ -111,13 +119,13 @@ function validCheck(event, role) {
   }, []).map(function (reg) {
     return reg.source;
   }).join('');
-  console.log("data => [".concat(event.data, "]"));
-  var regExp = new RegExp("[".concat(genRole, "]"), 'gi');
-  console.log(regExp);
-  console.log('test , ', regExp.test(event.data));
-  console.log('match , ', event.data.match(regExp));
-  var value = event.value;
-  console.log(event.target.value, event.data);
+
+  if (new RegExp("^(.)".concat(length, "$"), 'gi').test(value)) {
+    var regExp = new RegExp("[^".concat(genRole, "]").concat(length, "$"), 'gi');
+    target.value = value.replace(regExp, '');
+  } else {
+    target.value = value.slice(0, value.length - 1);
+  }
 }
 
 var loginLib = {

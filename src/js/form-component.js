@@ -39,9 +39,17 @@ function initForm(selector) {
 function validCheck(event, role) {
   if (event.data == null) return;
 
-  const checkRole = [...event.target.classList].filter(cls =>
+  const target = event.target;
+  const value = target.value;
+
+  const checkRole = [...target.classList].filter(cls =>
     ['number', 'eng', 'kor', 'symbol'].includes(cls)
   );
+
+  const length = [...target.classList].filter(cls => /{.*}/.exec(cls));
+  console.log(length);
+
+  console.log(length);
 
   const genRole = checkRole
     .reduce((makeRole, r) => {
@@ -54,14 +62,12 @@ function validCheck(event, role) {
     .map(reg => reg.source)
     .join('');
 
-  console.log(`data => [${event.data}]`);
-  const regExp = new RegExp(`[${genRole}]`, 'gi');
-
-  console.log(regExp);
-  console.log('test , ', regExp.test(event.data));
-  console.log('match , ', event.data.match(regExp));
-  const value = event.value;
-  console.log(event.target.value, event.data);
+  if (new RegExp(`^(.)${length}$`, 'gi').test(value)) {
+    const regExp = new RegExp(`[^${genRole}]${length}$`, 'gi');
+    target.value = value.replace(regExp, '');
+  } else {
+    target.value = value.slice(0, value.length - 1);
+  }
 }
 
 const loginLib = {
