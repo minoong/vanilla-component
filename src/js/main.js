@@ -1,12 +1,7 @@
-import { pi, power, Foo } from './lib';
-import loginLib from './login';
+import { test } from './lib';
+import loginLib from './form-component';
 
-console.log(pi);
-console.log(power(pi, pi));
-
-const f = new Foo();
-console.log(f.foo());
-console.log(f.bar());
+console.log(test);
 
 // polyfill이 필요한 코드
 console.log(
